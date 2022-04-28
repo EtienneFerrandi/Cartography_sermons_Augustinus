@@ -23,9 +23,7 @@ x=mapview(locations) %>%
                   direction = 'top',
                   textOnly = TRUE,
                   textsize = "20px")
-  addLayersControl(x, baseGroups = c("OpenStreetMap"))
-  addTiles(x,urlTemplate = "http://awmc.unc.edu/awmc/applications/alacarte/?
-jsonGet=%7B%22zoom%22%3A%225%22%2C%22center%22%3A%22lon%3D8.0665082793187%2Clat%3D36.376019739879%22%2C%22pids%22%3A%20%5B%5D%7D")
+ 
   
 x #view and export in html
 
