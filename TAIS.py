@@ -55,10 +55,3 @@ df.loc[df["lieu"] == 'Thubuna', 'longitude'] = longitudes[8]
 df.loc[df["lieu"] == 'Thubuna', 'latitude'] = latitudes[8]
 
 df.to_csv("sermons_hors_Hippo.csv")
-
-
-df["lieu"].value_counts()
-df["count"]=df['lieu'].map(df["lieu"].value_counts())
-df = df.dropna(subset=['count'])
-df['count'] = df['count'].apply(int)
-df.to_csv("count_hors_Hippo.csv")
