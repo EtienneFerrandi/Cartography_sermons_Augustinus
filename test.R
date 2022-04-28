@@ -5,9 +5,10 @@ library(mapview)
 library(leaflet)
 library(leafem)
 library(sp)
+library(svgtools)
+library(geojsonio)
 
-
-tab=read.csv(file = "~/sermons_hors_Hippo.csv")
+tab=read.csv(file = "sermons_hors_Hippo.csv")
 
 #projection of GPS coordinates on a world map
 position=data.frame(tab$numéro,tab$longitude,tab$latitude)
@@ -22,8 +23,22 @@ x=mapview(locations) %>%
                   direction = 'top',
                   textOnly = TRUE,
                   textsize = "20px")
+  addLayersControl(x, baseGroups = c("OpenStreetMap"))
+  addTiles(x,urlTemplate = "http://awmc.unc.edu/awmc/applications/alacarte/?
+jsonGet=%7B%22zoom%22%3A%225%22%2C%22center%22%3A%22lon%3D8.0665082793187%2Clat%3D36.376019739879%22%2C%22pids%22%3A%20%5B%5D%7D")
   
+x #view and export in html
 
+#display distance in kms between Milev and Carthago
+lonLat=as.matrix(data.frame(tab$longitude,tab$latitude)%>% drop_na() )
+milev=as.matrix(t(data.frame(lonLat[21,])))
+carthage=as.matrix(t(data.frame(lonLat[22,])))
+thubuna=as.matrix(t(data.frame(lonLat[77,])))
 
-mapshot(x, file = paste0(getwd(),"/file.png")) #save
+hippone_df=data.frame(7.751272,36.882478)
+colnames(hippone_df)=c("lon","lat")
+hippone=as.matrix(hippone_df)
 
+spDistsN1(hippone, carthage, longlat=TRUE)
+
+mapshot(x, file = paste0(getwd(),"/file.png")) #save as png
